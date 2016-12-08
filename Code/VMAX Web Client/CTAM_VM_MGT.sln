@@ -1,0 +1,48 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "CTAM_VM_MGT", ".", "{8D198FA9-7188-4E50-811F-AF01CEDBB52C}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.6"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_49879"
+		Debug.AspNetCompiler.PhysicalPath = "..\..\..\Qixiu Xin\CTAM_VM_MGT\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_49879\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_49879"
+		Release.AspNetCompiler.PhysicalPath = "..\..\..\Qixiu Xin\CTAM_VM_MGT\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_49879\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "49879"
+		SlnRelativePath = "..\..\..\Qixiu Xin\CTAM_VM_MGT\"
+		DefaultWebSiteLanguage = "Visual C#"
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XenMaster", "..\..\XenMaster\XenMaster\XenMaster.csproj", "{305FA8A8-B954-405E-BEA7-F8924867B40F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8D198FA9-7188-4E50-811F-AF01CEDBB52C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D198FA9-7188-4E50-811F-AF01CEDBB52C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D198FA9-7188-4E50-811F-AF01CEDBB52C}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D198FA9-7188-4E50-811F-AF01CEDBB52C}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{305FA8A8-B954-405E-BEA7-F8924867B40F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{305FA8A8-B954-405E-BEA7-F8924867B40F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{305FA8A8-B954-405E-BEA7-F8924867B40F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{305FA8A8-B954-405E-BEA7-F8924867B40F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
