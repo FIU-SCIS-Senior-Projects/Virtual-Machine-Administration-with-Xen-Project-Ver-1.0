@@ -1,0 +1,621 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewer="clr-namespace:VncSharpWpf;assembly=VncSharpWpf" 
+        xmlns:local="clr-namespace:VMAX"
+        xmlns:cpu ="clr-namespace:VMAX.Controls.Cpu"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" x:Class="VMAX.MainWindow"
+        xmlns:chartingToolkit ="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+        mc:Ignorable="d"
+        Title="Virtual Machine Administration with Xen 1.0"
+        WindowStartupLocation="CenterScreen"
+        Height="900" Width="1600">
+    <Grid x:Name="grid_main_layout">
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.,1" StartPoint="0.5,0">
+                <GradientStop Color="#FFBEC3D4" Offset="0.003"/>
+                <GradientStop Color="White" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+        <Grid.RowDefinitions>
+            <RowDefinition Height=".15*"/>
+            <RowDefinition Height=".5*"/>
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height=".15*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="5*"/>
+        </Grid.ColumnDefinitions>
+        <Menu Grid.ColumnSpan="2" Margin="0,0,0,0" BorderBrush="Black" BorderThickness="1,1,1,0" MenuItem.Click ="Menu_Click">
+            <MenuItem Header="_File">
+                <MenuItem Header="_Exit" />
+            </MenuItem>
+            <MenuItem Header="_Host">
+                <MenuItem Header="_Exit" />
+            </MenuItem>
+            <MenuItem Header="_VM">
+                <MenuItem Header="_Exit" />
+            </MenuItem>
+            <MenuItem Header="_Settings">
+                <MenuItem Header="_Application Settings" />
+            </MenuItem>
+            <MenuItem Header="_Help">
+                <MenuItem Header="_About" />
+            </MenuItem>
+        </Menu>
+
+        <Border Grid.Row="1" Margin="5,0,3,0" Grid.Column="0" Background="White" BorderThickness="2" BorderBrush="Black"/>
+        <Label  Content="VMAX" VerticalAlignment="Center" Grid.Row="1" HorizontalAlignment="Center" Margin="5,5,0,0" FontSize="64" FontFamily="Aharoni" Width="260.333"/>
+        <Rectangle Grid.Column="0" Height="40" Margin="5,5,3,5" Grid.Row="2" VerticalAlignment="Top" Stroke="Black">
+            <Rectangle.Fill>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FF0F3368" Offset="0"/>
+                    <GradientStop Color="#FF6DA9FF" Offset="1"/>
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+        <Label Content="Xen Hosts" Grid.Column="0" Grid.Row="2" Margin="5,10,5,5" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="White" FontWeight="Bold" FontSize="14.667"/>
+        <ListView x:Name="listview_hosts" SelectionChanged="listhosview_hosts_SelectionChanged"  ItemsSource="{Binding SysManager.Hosts}" Grid.Column="0" Margin="5,40,3,5" Grid.Row="2">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="1*"/>
+                            </Grid.RowDefinitions>
+                            <Image Grid.Column="0" Grid.RowSpan="3" Source="Images/Icons/32x32/1473070694_server_add.png"/>
+                            <TextBlock Margin="5,0,0,0" Grid.Column="1" Grid.Row="1" Text="{Binding Value.Name}"/>
+                            <StackPanel Margin="5,0,0,0" Orientation="Horizontal" Grid.Column="1" Grid.Row="2">
+                                <TextBlock Margin="0,0,0,0" FontSize="10.333" Text="Machines: "/>
+                                <TextBlock Margin="5,0,0,0" FontSize="10.333" Text="{Binding Value.VmCount}"/>
+                                <TextBlock Margin="5,0,0,0" FontSize="10.333" Text="Status: "/>
+                                <TextBlock Margin="5,0,0,0" FontSize="10.333" Text="{Binding Value.PowerState}"/>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <TabControl x:Name="tabcontrol_main" Grid.Column="1" Margin="2,5,5,5" Grid.Row="2">
+            <TabItem Width="100" Header="Overview" FontWeight="Bold">
+                <Grid Background="#FFE5E5E5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border CornerRadius="10,10,10,10"  Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="21" Grid.RowSpan="11" Background="#FFF7F7F7" BorderBrush="Black" BorderThickness="2,2,2,2" Margin="20,0,20,20">
+
+                    </Border>
+                    <Image Source="Images/server_large.png" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3" Grid.RowSpan="5" />
+                    <Image Source="Images/xen_logo.gif" Grid.Column="7" Margin="0,0,0,0" Grid.Row="4" Grid.ColumnSpan="8" Grid.RowSpan="4" Opacity="0.1"/>
+                    <Label x:Name="label_overview_host_name" Content="Host" Grid.Column="5" Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="15" FontWeight="Bold" FontSize="72"/>
+                    <Label Grid.Column="5" Grid.Row="3" Grid.ColumnSpan="3" Content="Virtual Machines:" FontWeight="Bold" FontSize="18"/>
+                    <Label Grid.Column="5" Grid.Row="4" Grid.ColumnSpan="3" Content="Power State:" FontWeight="Bold" FontSize="18"/>
+                    <Label Grid.Column="5" Grid.Row="5" Grid.ColumnSpan="3" Content="Unique Id:" FontWeight="Bold" FontSize="18"/>
+                    <Label Grid.Column="5" Grid.Row="6" Grid.ColumnSpan="3" Content="Libvirt IP:" FontWeight="Bold" FontSize="18"/>
+                    <Label Grid.Column="5" Grid.Row="7" Grid.ColumnSpan="3" Content="Libvirt Port:" FontWeight="Bold" FontSize="18"/>
+                    <Label Grid.Column="5" Grid.Row="8" Grid.ColumnSpan="3" Content="Agent Listener IP:" FontWeight="Bold" FontSize="18"/>
+                    <Label Grid.Column="5" Grid.Row="9" Grid.ColumnSpan="3" Content="Agent Listener Port:" FontWeight="Bold" FontSize="18"/>
+                    <Label x:Name="label_overview_host_vm_count" Grid.Column="8" Grid.Row="3" Grid.ColumnSpan="3" Content="" FontWeight="Normal" FontSize="18"/>
+                    <Label x:Name="label_overview_host_power" Grid.Column="8" Grid.Row="4" Grid.ColumnSpan="3" Content="" FontWeight="Normal" FontSize="18"/>
+                    <Label x:Name="label_overview_host_id" Grid.Column="8" Grid.Row="5" Grid.ColumnSpan="3" Content="" FontWeight="Normal" FontSize="18"/>
+                    <Label x:Name="label_overview_host_libvirt_ip" Grid.Column="8" Grid.Row="6" Grid.ColumnSpan="3" Content="" FontWeight="Normal" FontSize="18"/>
+                    <Label x:Name="label_overview_host_libvirt_port" Grid.Column="8" Grid.Row="7" Grid.ColumnSpan="3" Content="" FontWeight="Normal" FontSize="18"/>
+                    <Label x:Name="label_overview_host_agentlistner_ip" Grid.Column="8" Grid.Row="8" Grid.ColumnSpan="3" Content="" FontWeight="Normal" FontSize="18"/>
+                    <Label x:Name="label_overview_host_agentlistener_port" Grid.Column="8" Grid.Row="9" Grid.ColumnSpan="3" Content="" FontWeight="Normal" FontSize="18"/>
+                </Grid>
+            </TabItem>
+            <TabItem Width="110" Header="Virtual Machines" Margin="0,0,0,0">
+                <Grid Background="#FFE5E5E5">
+                    <ListView x:Name="listview_vms">
+                        <ListView.Resources>
+                            <Style x:Key="VMImagePowerOffStyle" TargetType="{x:Type Image}">
+                                <Setter Property="Source" Value="{DynamicResource VM_ON}"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Value.State}" Value="5">
+                                        <Setter Property="Source" Value="{DynamicResource VM_OFF}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ListView.Resources>
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Virtual Machine" Width="175">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal" Width="175">
+                                                <StackPanel.ContextMenu>
+                                                    <ContextMenu>
+                                                        <MenuItem Header="Start" Click="MenuItem_Click">
+                                                            <MenuItem.Icon>
+                                                                <Image Width="16" Height="16" Source="Images/Icons/16x16/control-power.png" />
+                                                            </MenuItem.Icon>
+                                                        </MenuItem>
+                                                        <MenuItem Header="Stop" Click="MenuItem_Click">
+                                                            <MenuItem.Icon>
+                                                                <Image Source="Images/Icons/16x16/control-stop-square.png" />
+                                                            </MenuItem.Icon>
+                                                        </MenuItem>
+                                                        <MenuItem Header="Pause" Click="MenuItem_Click">
+                                                            <MenuItem.Icon>
+                                                                <Image Source="Images/Icons/16x16/control-pause.png" />
+                                                            </MenuItem.Icon>
+                                                        </MenuItem>
+                                                        <MenuItem Header="Resume" Click="MenuItem_Click">
+                                                            <MenuItem.Icon>
+                                                                <Image Source="Images/Icons/16x16/arrow-circle-double-135.png" />
+                                                            </MenuItem.Icon>
+                                                        </MenuItem>
+                                                        <Separator/>
+                                                        <MenuItem Header="Clone" Click="MenuItem_Click">
+                                                            <MenuItem.Icon>
+                                                                <Image Source="Images/Icons/16x16/clone.png" />
+                                                            </MenuItem.Icon>
+                                                        </MenuItem>
+                                                        <MenuItem Header="Delete" Click="MenuItem_Click">
+                                                            <MenuItem.Icon>
+                                                                <Image Source="Images/Icons/16x16/recycle.png" />
+                                                            </MenuItem.Icon>
+                                                        </MenuItem>
+                                                        <MenuItem Header="Force Shutdown" Click="MenuItem_Click">
+                                                            <MenuItem.Icon>
+                                                                <Image Source="Images/Icons/16x16/halt.png" />
+                                                            </MenuItem.Icon>
+                                                        </MenuItem>
+                                                        <Separator/>
+                                                        <MenuItem Header="Remote Control" Click="MenuItem_Click">
+                                                            <MenuItem.Icon>
+                                                                <Image Source="Images/Icons/16x16/remote_desktop.png" />
+                                                            </MenuItem.Icon>
+                                                        </MenuItem>
+                                                        <Separator/>
+                                                        <MenuItem Header="Info" Click="MenuItem_Click">
+                                                            <MenuItem.Icon>
+                                                                <Image Source="Images/Icons/16x16/information.png" />
+                                                            </MenuItem.Icon>
+                                                        </MenuItem>
+                                                    </ContextMenu>
+                                                </StackPanel.ContextMenu>
+                                                <Image x:Name="image_vm" Width="24" Height="24" >
+                                                    <Image.Resources>
+                                                        <BitmapImage x:Key="VM_ON" UriSource="Images/Icons/32x32/1473070795_terminal.png"/>
+                                                        <BitmapImage x:Key="VM_OFF" UriSource="Images/Icons/32x32/1473070795_terminal_off.png"/>
+                                                    </Image.Resources>
+                                                    <Image.Style>
+                                                        <StaticResource ResourceKey="VMImagePowerOffStyle"/>
+                                                    </Image.Style>
+                                                </Image>
+                                                <TextBlock Text="{Binding Value.Name}"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="PowerState" Width="150">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Value.PowerState}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="CpuTime" Width="150">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Value.CpuTimeStamp}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="VCPUS" Width="150">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Value.VCpus}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Memory Usage" Width="150">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding Value.MemoryGB, StringFormat=N2}"/>
+                                                <TextBlock Margin="5,0,0,0" Text="GB"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Maximum Memory" Width="150">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding Value.MaxMemGB, StringFormat=N2}"/>
+                                                <TextBlock Margin="5,0,0,0" Text="GB"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Grid>
+            </TabItem>
+            <TabItem Width="100" Header="Storage">
+                <Grid  Background="#FFE5E5E5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <Rectangle Margin="50,25,50,50" Height="25" VerticalAlignment="Top"  Grid.Row="0">
+                        <Rectangle.Fill>
+                            <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                                <GradientStop Color="#FF2A4EB0" Offset="0"/>
+                                <GradientStop Color="#FF08A5FF" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <Label Margin="50,25,50,50" Content="Virtual Machine Disk Images" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="0" FontWeight="Bold" Foreground="White"/>
+                    <ListView x:Name="listview_host_disks" Margin="50,50,50,50" Grid.Row="0">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Name"  Width="150">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Width="24" Source="Images/Icons/16x16/disc.png" Height="24" />
+                                                <TextBlock Margin="5,5,5,5" Text="{Binding NameCanonical}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Size KB"  Width="150">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Size}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Size GB"  Width="150">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding SizeGB, StringFormat=N2}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Extension"  Width="150">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Extension}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Format"  Width="150">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Format}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <Rectangle Margin="50,25,50,50" Height="25" VerticalAlignment="Top"  Grid.Row="1">
+                        <Rectangle.Fill>
+                            <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                                <GradientStop Color="#FF2A4EB0" Offset="0"/>
+                                <GradientStop Color="#FF08A5FF" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <Label Margin="50,25,50,50" Content="Host ISO Images" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="1" FontWeight="Bold" Foreground="White"/>
+                    <ListView x:Name="listview_host_images" Margin="50,50,50,50" Grid.Row="1">
+                        <ListView.Resources>
+                            <Style x:Key="OsStyle" TargetType="{x:Type Image}">
+                                <Setter Property="Source" Value="{DynamicResource LINUX}"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Format}" Value="Windows">
+                                        <Setter Property="Source" Value="{DynamicResource WINDOWS}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ListView.Resources>
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Name"  Width="150">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image x:Name="image_os" Width="24" Height="24">
+                                                    <Image.Resources>
+                                                        <BitmapImage x:Key="WINDOWS" UriSource="Images/Icons/16x16/windows-logo.png"/>
+                                                        <BitmapImage x:Key="LINUX" UriSource="Images/Icons/16x16/linux-icon.png"/>
+                                                    </Image.Resources>
+                                                    <Image.Style>
+                                                        <StaticResource ResourceKey="OsStyle"/>
+                                                    </Image.Style>
+                                                </Image>
+                                                <TextBlock Margin="5,5,5,5" Text="{Binding NameCanonical}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Operating System"  Width="150">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Format}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Size KB"  Width="150">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Size}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Size GB"  Width="150">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding SizeGB, StringFormat=N2}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Grid>
+            </TabItem>
+            <TabItem Width="100" Header="Disk Usage">
+                <Grid Background="#FFF1F1F1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <chartingToolkit:Chart  Name="pieChart" Title="Overall Usage" Grid.Row="1" Grid.Column="0" Margin="50,0,0,0" Grid.ColumnSpan="7" Grid.RowSpan="8" VerticalAlignment="Top" Height="450" BorderBrush="White" >
+                        <chartingToolkit:PieSeries DependentValuePath="Value" IndependentValuePath="Key" ItemsSource="{Binding}" IsSelectionEnabled="True" />
+                    </chartingToolkit:Chart>
+                    <chartingToolkit:Chart  Name="barChart" Title="File System Usage" Grid.Row="1" Grid.Column="7" Grid.ColumnSpan="8" Grid.RowSpan="8" VerticalAlignment="Top" Margin="0,0,0,0" Height="450" BorderBrush="#FFFFF8F8">
+                        <chartingToolkit:BarSeries  DependentValuePath="Value" IndependentValuePath="Key" ItemsSource="{Binding}" IsSelectionEnabled="True"/>
+                    </chartingToolkit:Chart>
+                </Grid>
+            </TabItem>
+            <TabItem Width="100" Header="Performance">
+                <Grid Background="#FFE5E5E5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="12*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width=".20*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border Grid.Row="1" Margin="10,0,0,0" Grid.RowSpan="2" Background="White" BorderThickness="0,0,2,0" BorderBrush="#FF939393" />
+                    <Border Grid.Row="2" Margin="10,0,10,0" Grid.ColumnSpan="2" Background="White" BorderThickness="0,2,0,0" BorderBrush="#FF939393" >
+                        <Label x:Name="label1" Content="Virtual Machine CPU Performance" HorizontalAlignment="Left" Height="36" Margin="511,8,0,0" VerticalAlignment="Top" Width="341" FontSize="16" FontWeight="Bold"/>
+                    </Border>
+                    <ListView Margin="0,0,10,0" x:Name="listview_performance" Grid.Row="1" Grid.Column="1" Background="White" BorderThickness="0,0,1,0">
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+                    </ListView>
+                </Grid>
+            </TabItem>
+            <TabItem Width="100" Header="File Manager">
+                <Grid  Background="#FFE5E5E5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="5*"/>
+                        <ColumnDefinition Width="7*"/>
+                        <ColumnDefinition Width="7*"/>
+                        <ColumnDefinition Width="30*"/>
+                        <ColumnDefinition Width="10*"/>
+                        <ColumnDefinition Width="5*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="10*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <Rectangle Grid.Row="2" Grid.Column="1" Fill="White" Grid.RowSpan="5" Grid.ColumnSpan="4" Stroke="Black"/>
+                    <Rectangle Height="30" VerticalAlignment="Bottom"  Grid.Row="1" Grid.Column="1"  Grid.ColumnSpan="4">
+                        <Rectangle.Fill>
+                            <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                                <GradientStop Color="#FF2A4EB0" Offset="0"/>
+                                <GradientStop Color="#FF08A5FF" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <Label Content="File Manager" HorizontalAlignment="Center" Height="28" VerticalAlignment="Bottom" Grid.Column="1" FontWeight="Bold" Foreground="White" Grid.Row="1" Grid.ColumnSpan="4"/>
+                    <Label Content="File Transfer" Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold"/>
+                    <Button Content="Browse" x:Name="btn_file_transfer_browse" Grid.Column="2" Width="100" Height="30"  Grid.Row="3" Click="btn_file_transfer_browse_Click"/>
+                    <TextBox  x:Name="textbox_file_transfer_path" Height="30"  Text="File Path..." Margin ="20,10,20,10" Grid.Column="3" Grid.Row="3" IsEnabled="False"/>
+                    <Button Content="Send" Grid.Column="4" Width="100" Height="30"  Grid.Row="3" Click="btn_file_transfer_send_Click"/>
+                </Grid>
+            </TabItem>
+            <TabItem Width="100" Header="Logs">
+                <Grid Background="#FFE5E5E5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height=".4*"/>
+                        <RowDefinition Height="5*"/>
+                    </Grid.RowDefinitions>
+                    <ListView x:Name="listview_logs" ItemsSource="{Binding EventLogList}" Margin="5,5,5,5" Grid.Row="1">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Severity Level" Width="120" DisplayMemberBinding="{Binding Severity}" />
+                                <GridViewColumn Header="Event Type" Width="120" DisplayMemberBinding="{Binding CanonicalType}" />
+                                <GridViewColumn Header="Message" Width="1000" DisplayMemberBinding="{Binding Message}" />
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Grid>
+            </TabItem>
+        </TabControl>
+        <Grid x:Name="grid_toolbar" Grid.Column="1" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5*"/>
+                <RowDefinition Height="5*"/>
+            </Grid.RowDefinitions>
+            <ToolBar ToolBarTray.IsLocked="True" ToolBar.OverflowMode="Never" Grid.Column="0">
+                <ToolBar.Background>
+                    <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                        <GradientStop Color="White" Offset="0"/>
+                        <GradientStop Color="#FFFFFBFF" Offset="0.5"/>
+                        <GradientStop Color="Gainsboro" Offset="1"/>
+                    </LinearGradientBrush>
+                </ToolBar.Background>
+                <StackPanel Width="400" HorizontalAlignment="Center">
+                    <Grid Height="38">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Connection:" VerticalAlignment="Center"/>
+                        <ComboBox x:Name="combobox_system_ip" Margin="5,4,5,4" Grid.Column="1" FontSize="15"/>
+                        <Button x:Name="btn_connect" Width="130" Margin="5,0,5,0" Grid.Column="2" Click="btn_connect_Click">
+                            <Button.Background>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FF2F680F" Offset="0"/>
+                                    <GradientStop Color="#FF7AFF6D" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Button.Background>
+                            <StackPanel Height="32" Width="200" Orientation="Horizontal" VerticalAlignment="Top">
+                                <StackPanel.Resources>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Margin" Value="5,0,0,0"/>
+                                    </Style>
+                                </StackPanel.Resources>
+                                <Image Source="Images/Icons/32x32/world_connect.png"/>
+                                <TextBlock x:Name="textblock_btn_connect" VerticalAlignment="Center" FontSize="13.333" Foreground="#FFFFFDFD"><Run Text="Connect"/></TextBlock>
+                            </StackPanel>
+                        </Button>
+                    </Grid>
+                </StackPanel>
+                <Separator/>
+                <Button x:Name="btn_add_host" Width="160" Click="btn_add_host_Click">
+                    <StackPanel Height="32" Width="200" Orientation="Horizontal">
+                        <StackPanel.Resources>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="Margin" Value="5,0,0,0"/>
+                            </Style>
+                            <Style TargetType="{x:Type Image}">
+                                <Setter Property="Margin" Value="10,0,0,0"/>
+                            </Style>
+                        </StackPanel.Resources>
+                        <Image Source="Images/Icons/32x32/1473070499_server.png"/>
+                        <Image Margin="5,0,0,0" Source="Images/Icons/32x32/plus-circle.png"/>
+                        <TextBlock VerticalAlignment="Bottom" FontSize="13.333" Margin="5,0,0,7.133"><Run Text="Add Host"/></TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button Width="130">
+                    <StackPanel Height="32" Width="200" Orientation="Horizontal">
+                        <StackPanel.Resources>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="Margin" Value="5,0,0,0"/>
+                            </Style>
+                        </StackPanel.Resources>
+                        <Image Source="Images/Icons/32x32/minus-circle.png"/>
+                        <TextBlock VerticalAlignment="Center" FontSize="13.333"><Run Text="Remove Host"/></TextBlock>
+                    </StackPanel>
+                </Button>
+                <Separator/>
+                <Image Width="24" Height="24" HorizontalAlignment="Right" Margin="20,0,0,0" Source="Images/Icons/32x32/1473070795_terminal.png"/>
+                <Button x:Name="btn_create_vm" Width="130" Margin="10,-5,0,0" Click="btn_create_vm_Click">
+                    <StackPanel Height="32" Width="200" Orientation="Horizontal" VerticalAlignment="Top">
+                        <StackPanel.Resources>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="Margin" Value="5,0,0,0"/>
+                            </Style>
+                        </StackPanel.Resources>
+                        <Image Source="Images/Icons/32x32/plus.png"/>
+                        <TextBlock VerticalAlignment="Center" FontSize="13.333"><Run Text="Create VM"/></TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button Width="130" Margin="5,-5,0,0">
+                    <StackPanel Height="32" Width="200" Orientation="Horizontal" VerticalAlignment="Top">
+                        <StackPanel.Resources>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="Margin" Value="5,0,0,0"/>
+                            </Style>
+                        </StackPanel.Resources>
+                        <Image Source="Images/Icons/32x32/minus.png"/>
+                        <TextBlock VerticalAlignment="Center" FontSize="13.333"><Run Text="Remove VM"/></TextBlock>
+                    </StackPanel>
+                </Button>
+            </ToolBar>
+        </Grid>
+        <Label x:Name="label" Content="1.0" HorizontalAlignment="Right" Margin="0,0,34.798,5.812" Grid.Row="1" VerticalAlignment="Bottom" Height="25.96" FontFamily="Aharoni" FontSize="21.333"/>
+        <Label x:Name="label_powered" Content="Label" Grid.Column="1" HorizontalAlignment="Left" Margin="377,0,0,0" Grid.Row="3" VerticalAlignment="Top" Width="313" Foreground="#FFAAA8A8"/>
+    </Grid>
+</Window>

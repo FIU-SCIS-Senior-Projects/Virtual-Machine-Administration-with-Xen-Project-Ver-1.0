@@ -1,0 +1,87 @@
+﻿<Window x:Class="VMAX.VMInfoWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:VMAX"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title="VM Information" Height="500" Width="500">
+    <Grid Background="#FFF8F8F8">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="4*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Rectangle Grid.Row="2" Grid.Column="1" Fill="AliceBlue" />
+        <Rectangle Grid.Row="3" Grid.Column="1" Fill="White" />
+        <Rectangle Grid.Row="4" Grid.Column="1" Fill="AliceBlue" />
+        <Rectangle Grid.Row="5" Grid.Column="1" Fill="White" />
+        <Rectangle Grid.Row="6" Grid.Column="1" Fill="AliceBlue" />
+        <Rectangle Grid.Row="7" Grid.Column="1" Fill="White" />
+        <Rectangle Grid.Row="8" Grid.Column="1" Fill="AliceBlue" />
+        <Rectangle Grid.Row="9" Grid.Column="1" Fill="White" />
+        <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" BorderThickness="1,0,0,2" Opacity="0.5" BorderBrush="Black">
+            <Border.Background>
+                <LinearGradientBrush EndPoint=".2,1" StartPoint="1.0,0">
+                    <GradientStop Color="#FF525B7E" Offset="0.003"/>
+                    <GradientStop Color="White" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
+        </Border>
+        <Label Content="Virtual Machine Information" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="0" Grid.ColumnSpan="2" FontFamily="Aharoni" FontSize="24" Foreground="#FF424242"/>
+        <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal">
+            <Image Width="24" Height="24" HorizontalAlignment="Right" Margin="20,0,0,0" Source="Images/Icons/32x32/1473070795_terminal.png"/>
+            <Label Margin="10,0,0,0" Content="Name" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0" FontWeight="Bold"/>
+        </StackPanel>
+        <StackPanel Grid.Row="3" Grid.Column="0" Orientation="Horizontal">
+            <Image Width="24" Height="24" HorizontalAlignment="Right" Margin="20,0,0,0" Source="Images/Icons/32x32/power.png"/>
+            <Label Margin="10,0,0,0" Content="Power State" VerticalAlignment="Center" Grid.Row="2" Grid.Column="0" FontWeight="Bold"/>
+        </StackPanel>
+        <StackPanel Grid.Row="4" Grid.Column="0" Orientation="Horizontal">
+            <Image Width="24" Height="24" HorizontalAlignment="Right" Margin="20,0,0,0" Source="Images/Icons/32x32/card-address.png"/>
+            <Label Margin="10,0,0,0" Content="UUID" VerticalAlignment="Center" Grid.Row="3" Grid.Column="0" FontWeight="Bold"/>
+        </StackPanel>
+        <StackPanel Grid.Row="5" Grid.Column="0" Orientation="Horizontal">
+            <Image Width="24" Height="24" HorizontalAlignment="Right" Margin="20,0,0,0" Source="Images/Icons/32x32/counter.png"/>
+            <Label Margin="10,0,0,0" Content="Machine Id" VerticalAlignment="Center" Grid.Row="6" Grid.Column="0" FontWeight="Bold"/>
+        </StackPanel>
+        <StackPanel Grid.Row="6" Grid.Column="0" Orientation="Horizontal">
+            <Image Width="24" Height="24" HorizontalAlignment="Right" Margin="20,0,0,0" Source="Images/Icons/32x32/memory.png"/>
+            <Label Margin="10,0,0,0" Content="Max Memory" VerticalAlignment="Center" Grid.Row="5" Grid.Column="0" FontWeight="Bold"/>
+        </StackPanel>
+        <StackPanel Grid.Row="7" Grid.Column="0" Orientation="Horizontal">
+            <Image Width="24" Height="24" HorizontalAlignment="Right" Margin="20,0,0,0" Source="Images/Icons/32x32/application.png"/>
+            <Label Margin="10,0,0,0" Content="Current Memory" VerticalAlignment="Center" Grid.Row="5" Grid.Column="0" FontWeight="Bold"/>
+        </StackPanel>
+        <StackPanel Grid.Row="8" Grid.Column="0" Orientation="Horizontal">
+            <Image Width="24" Height="24" HorizontalAlignment="Right" Margin="20,0,0,0" Source="Images/Icons/32x32/processor.png"/>
+            <Label Margin="10,0,0,0" Content="VCpus" VerticalAlignment="Center" Grid.Row="4" Grid.Column="0" FontWeight="Bold"/>
+        </StackPanel>
+        <StackPanel Grid.Row="9" Grid.Column="0" Orientation="Horizontal">
+            <Image Width="24" Height="24" HorizontalAlignment="Right" Margin="20,0,0,0" Source="Images/Icons/32x32/clock.png"/>
+            <Label Margin="10,0,0,0" Content="Cpu Time" VerticalAlignment="Center" Grid.Row="4" Grid.Column="0" FontWeight="Bold"/>
+        </StackPanel>
+        <Label x:Name="label_name" Margin="10,0,0,0" Content="Name" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1"/>
+        <Label x:Name="label_power" Margin="10,0,0,0" Content="Name" VerticalAlignment="Center" Grid.Row="3" Grid.Column="1"/>
+        <Label x:Name="label_uuid" Margin="10,0,0,0" Content="Name" VerticalAlignment="Center" Grid.Row="4" Grid.Column="1"/>
+        <Label x:Name="label_machine" Margin="10,0,0,0" Content="Name" VerticalAlignment="Center" Grid.Row="5" Grid.Column="1"/>
+        <Label x:Name="label_memory" Margin="10,0,0,0" Content="Name" VerticalAlignment="Center" Grid.Row="6" Grid.Column="1"/>
+        <Label x:Name="label_current_memory" Margin="10,0,0,0" Content="Name" VerticalAlignment="Center" Grid.Row="7" Grid.Column="1"/>
+        <Label x:Name="label_vcpus" Margin="10,0,0,0" Content="Name" VerticalAlignment="Center" Grid.Row="8" Grid.Column="1"/>
+        <Label x:Name="label_cpu_time" Margin="10,0,0,0" Content="Name" VerticalAlignment="Center" Grid.Row="9" Grid.Column="1"/>
+    </Grid>
+</Window>

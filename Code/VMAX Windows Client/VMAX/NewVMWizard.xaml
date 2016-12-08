@@ -1,0 +1,123 @@
+﻿<Window x:Class="VMAX.NewVMWizard"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:VMAX"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title="New VM Wizard" Height="700" Width="1100" Background="#FFF8F8F8">
+    <Grid Background="#FFF8F8F8">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1.5*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+        <Rectangle Grid.Row="2" Grid.Column="4" Fill="AliceBlue" />
+        <Rectangle Grid.Row="3" Grid.Column="4" Fill="White" />
+        <Rectangle Grid.Row="4" Grid.Column="4" Fill="AliceBlue" />
+        <Rectangle Grid.Row="5" Grid.Column="4" Fill="White" />
+        <Rectangle Grid.Row="6" Grid.Column="4" Fill="AliceBlue" />
+        <Rectangle Grid.Row="7" Grid.Column="4" Fill="White" />
+        <Rectangle Height="25" Margin="0,0,0,0" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
+            <Rectangle.Fill>
+                <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                    <GradientStop Color="#FF2A4EB0" Offset="0"/>
+                    <GradientStop Color="#FF08A5FF" Offset="1"/>
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+        <Label Margin="10,7,20,0" Content="Virtual Machine Information" HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="1" FontWeight="Bold" Grid.ColumnSpan="2" Foreground="White"/>
+        <Border Grid.Row="2" Grid.Column="1" Grid.RowSpan="9" Margin="0,0,0,0" Grid.ColumnSpan="2" CornerRadius="0,0,5,5" Background="White" BorderBrush="Black" BorderThickness="1">
+            
+        </Border>
+        <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" BorderThickness="1,0,0,2" Opacity="0.5" BorderBrush="Black">
+            <Border.Background>
+                <LinearGradientBrush EndPoint=".2,1" StartPoint="1.0,0">
+                    <GradientStop Color="#FF525B7E" Offset="0.003"/>
+                    <GradientStop Color="White" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
+        </Border>
+        <Label Content="New Virtual Machine Wizard" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="0" Grid.ColumnSpan="5" FontFamily="Aharoni" FontSize="24" Foreground="#FF424242"/>
+        <Label Content="Host" Margin="5,5,5,5" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1"/>
+        <ComboBox x:Name="combobox_host" Margin="10,10,250,10" Grid.Row="2" Grid.Column="2" DropDownClosed="ComboBox_Host_DropDownClosed"/>
+        <Label Content="Name" Margin="5,5,5,5" VerticalAlignment="Center" Grid.Row="3" Grid.Column="1"/>
+        <TextBox x:Name="textbox_vm_name" Grid.Row="3" Margin="10,10,250,10" Grid.Column="2"/>
+        <Label Content="Memory" Margin="5,5,5,5" VerticalAlignment="Center" Grid.Row="5" Grid.Column="1"/>
+        <Label Content="Os Image" Margin="5,5,5,5" VerticalAlignment="Center" Grid.Row="4" Grid.Column="1"/>
+        <StackPanel Grid.Row="4" Grid.Column="2" Orientation="Horizontal" >
+            <ComboBox x:Name="combobox_os_image" Margin="10,0,0,0" Height="35"  Width="170"/>
+            <CheckBox x:Name="checkbox_existing" Margin="20,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" Checked="checkbox_existing_Checked" Unchecked="checkbox_existing_Unchecked"/>
+            <Label Content="Use Existing Disk" Margin="15,0,0,0"  HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
+        </StackPanel>
+        <StackPanel  Grid.Row="5" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" Orientation="Horizontal">
+            <Slider Name="slider_memory" Grid.Row="4" Grid.Column="2" VerticalAlignment="Center" Margin="10, 0, 0, 0" Width="280" Orientation="Horizontal" HorizontalAlignment="Left" Value="128" Minimum="128" Maximum="16000" SmallChange="2" LargeChange="24" TickPlacement="BottomRight" TickFrequency="200"/>
+            <TextBox x:Name="textbox_vm_memory" Margin="15,0,0,0" Grid.Row="3" Grid.Column="2" Width="50" VerticalAlignment="Center" Text="{Binding ElementName=slider_memory, Path=Value,  StringFormat=N0}"/>
+            <Label Grid.Row="3" Grid.Column="2" Margin="5,0,0,0" Content="MB" FontWeight="Bold"/>
+        </StackPanel>
+        <Label Content="Virtual Disk"  Grid.Row="6" Grid.Column="1" Margin="5,5,5,5" VerticalAlignment="Center"/>
+        <StackPanel  Grid.Row="6" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" Orientation="Horizontal">
+            <Slider Name="slider_hd" VerticalAlignment="Center" Margin="10, 0, 0, 0" Width="280" Orientation="Horizontal" HorizontalAlignment="Left" Value="10" Minimum="10" Maximum="1000" SmallChange="1" LargeChange="10" TickPlacement="BottomRight" TickFrequency="10"/>
+            <TextBox x:Name="textbox_vm_hd" Margin="15,0,0,0" Grid.Row="2" Grid.Column="2" Width="50" VerticalAlignment="Center" Text="{Binding ElementName=slider_hd, Path=Value,  StringFormat=N0}"/>
+            <Label Grid.Row="2" Grid.Column="2" Margin="5,0,0,0" Content="GB" FontWeight="Bold"/>
+        </StackPanel>
+        <Label Content="VCPU"  Grid.Row="7" Grid.Column="1" Margin="5,5,5,5" VerticalAlignment="Center"/>
+        <StackPanel Grid.Row="7" Grid.Column="2" Orientation="Horizontal">
+            <Slider Name="slider_vcpu" VerticalAlignment="Center" Margin="10, 0, 0, 0" Width="280" Orientation="Horizontal" HorizontalAlignment="Left" Value="1" Minimum="1" Maximum="16" SmallChange="1" LargeChange="1" TickPlacement="BottomRight" TickFrequency="11"/>
+            <TextBox x:Name="textbox_vm_vcpu" Margin="15,0,0,0" Width="50" VerticalAlignment="Center" Text="{Binding ElementName=slider_vcpu, Path=Value,  StringFormat=N0}"/>
+        </StackPanel>
+        <StackPanel  Grid.Row="9" HorizontalAlignment="Left" Grid.Column="2" Orientation="Horizontal">
+            <Button Content="Create VM"  HorizontalAlignment="Left"  Height="40" Width="150" Foreground="White" FontWeight="Bold" Click="btn_create_vm_Click">
+                <Button.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FF2F680F" Offset="0"/>
+                        <GradientStop Color="#FF7AFF6D" Offset="1"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
+            <Button Content="Reset"  HorizontalAlignment="Left" Margin="20,0,0,0"  Height="40" Width="150" Foreground="Black" FontWeight="Bold"/>
+        </StackPanel>
+        <StackPanel Grid.Column="3" Grid.Row="2" Orientation="Horizontal">
+            <Image Width="24" Height="24" HorizontalAlignment="Right" Margin="20,0,0,0" Source="Images/Icons/32x32/1473070499_server.png"/>
+        </StackPanel>
+        <Label Grid.Column="4" Grid.Row="2" VerticalAlignment="Center" Margin="10,0,0,0" Content="{Binding ElementName=combobox_host, Path=Text}" FontWeight="Bold"/>
+        <StackPanel Grid.Column="3" Grid.Row="3" Orientation="Horizontal">
+            <Image Width="24" Height="24" HorizontalAlignment="Right" Margin="20,0,0,0" Source="Images/Icons/32x32/1473070795_terminal.png"/>
+        </StackPanel>
+        <Label VerticalAlignment="Center"  Grid.Column="4" Grid.Row="3" Margin="10,0,0,0" Content="{Binding ElementName=textbox_vm_name, Path=Text}" FontWeight="Bold"/>
+        <StackPanel Grid.Column="3" Grid.Row="4" Orientation="Horizontal">
+            <Image Width="24" Height="24" HorizontalAlignment="Right" Margin="20,0,0,0" Source="Images/Icons/16x16/application-sidebar.png"/>
+        </StackPanel>
+        <Label Grid.Column="4" Grid.Row="4"  Margin="10,0,0,0" Content="{Binding ElementName=combobox_os_image, Path=Text}" FontWeight="Bold"/>
+        <StackPanel Grid.Column="3" Grid.Row="5" Orientation="Horizontal">
+            <Image Width="24" Height="24" HorizontalAlignment="Right" Margin="20,0,0,0" Source="Images/Icons/32x32/memory.png"/>
+        </StackPanel>
+        <TextBlock  Grid.Column="4" Grid.Row="5" VerticalAlignment="Center" Margin="10,0,0,0" Text="{Binding ElementName=slider_memory, Path=Value,  StringFormat=N0}" FontWeight="Bold"/>
+        <StackPanel Grid.Column="3" Grid.Row="6" Orientation="Horizontal">
+            <Image Width="24" Height="24" HorizontalAlignment="Right" Margin="20,0,0,0" Source="Images/Icons/32x32/disc.png"/>
+        </StackPanel>
+        <TextBlock x:Name="textblock_slider_value_display" Grid.Column="4" Grid.Row="6" VerticalAlignment="Center" Margin="10,0,0,0" Text="{Binding ElementName=slider_hd, Path=Value,  StringFormat=N0}" FontWeight="Bold"/>
+        <StackPanel Grid.Column="3" Grid.Row="7" Orientation="Horizontal">
+            <Image Width="24" Height="24" HorizontalAlignment="Right" Margin="20,0,0,0" Source="Images/Icons/32x32/processor.png"/>
+        </StackPanel>
+        <TextBlock Grid.Column="4" Grid.Row="7" VerticalAlignment="Center" Margin="10,0,0,0" Text="{Binding ElementName=slider_vcpu, Path=Value,  StringFormat=N0}" FontWeight="Bold"/>
+    </Grid>
+</Window>

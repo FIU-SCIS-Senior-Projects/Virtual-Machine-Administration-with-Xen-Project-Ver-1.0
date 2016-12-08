@@ -1,0 +1,5 @@
+C:\Users\DODTech\Source\Repos\VMAX\VMAX\VMAX\bin\Debug\VMAX.exe.config
+C:\Users\DODTech\Source\Repos\VMAX\VMAX\VMAX\obj\Debug\MainWindow.g.cs
+C:\Users\DODTech\Source\Repos\VMAX\VMAX\VMAX\obj\Debug\App.g.cs
+C:\Users\DODTech\Source\Repos\VMAX\VMAX\VMAX\obj\Debug\VMAX_MarkupCompile.cache
+C:\Users\DODTech\Source\Repos\VMAX\VMAX\VMAX\obj\Debug\VMAX_MarkupCompile.lref
