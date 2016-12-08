@@ -14,7 +14,6 @@ import (
 	"github.com/jroimartin/gocui"
 )
 
-//PATH has to change depending on where the file is located on Xen Server
 
 var path string = "/users/orionxi/Documents/Go/hello/introspector.conf"
 
@@ -188,9 +187,7 @@ func Display(g *gocui.Gui, v *gocui.View) error {
 		}
 		v.Editable = true
 		v.Wrap = true
-	if err := g.SetKeybinding("input", gocui.KeyEnter, gocui.ModNone, EditIPaddress); err != nil {
-		return err
-			}
+
 		}	
 	}
 		if l == "Edit Host Port Number:" {
@@ -206,11 +203,8 @@ func Display(g *gocui.Gui, v *gocui.View) error {
 		}
 		v.Editable = true
 		v.Wrap = true
-		
-	if err := g.SetKeybinding("portinput", gocui.KeyEnter, gocui.ModNone, EditPort); err != nil {
-			return err
-			}
 		}
+		
 	}
 	
 	if l == "Edit Host IP Address & Port Number:" {
@@ -319,52 +313,6 @@ func DisplayFile(g *gocui.Gui, v *gocui.View) error {
 }
 
 
-func NewView(g *gocui.Gui, v *gocui.View) error {
-	
-	
-	maxX, maxY := g.Size()
-	if v, err := g.SetView("input", 50, 5, maxX/2, maxY/2-20); err != nil {
-		if err != gocui.ErrUnknownView {
-			return err
-		}
-		v.Title = "Input IP Address"
-		fmt.Fprintln(v, "")
-			if err := g.SetCurrentView("input"); err != nil {
-			return err
-		}
-		v.Editable = true
-		v.Wrap = true
-	if err := g.SetKeybinding("input", gocui.KeyEnter, gocui.ModNone, EditIPaddress); err != nil {
-		return err
-		}
-	}
-	return nil	
-}
-
-
-func NewPortView(g *gocui.Gui, v *gocui.View) error {
-		
-	maxX, maxY := g.Size()
-	if v, err := g.SetView("portinput", 50, 5, maxX/2, maxY/2-20); err != nil {
-		if err != gocui.ErrUnknownView {
-			return err
-		}
-		v.Title = "Input Port Number"
-		fmt.Fprintln(v, "")
-			if err := g.SetCurrentView("portinput"); err != nil {
-			return err
-		}
-		v.Editable = true
-		v.Wrap = true
-		
-	if err := g.SetKeybinding("portinput", gocui.KeyEnter, gocui.ModNone, EditPort); err != nil {
-		return err
-		}
-	}
-	return nil	
-}
-
-
 
 func EditIPaddress(g *gocui.Gui, v *gocui.View) error {
 	vb := v.ViewBuffer()
@@ -372,7 +320,7 @@ func EditIPaddress(g *gocui.Gui, v *gocui.View) error {
 	trial := net.ParseIP(RemoveSpace(vb))
 	if trial.To4() == nil {
 			maxX, maxY := g.Size()
-			if v, err := g.SetView("errmsg", 50, 5, maxX/2, maxY/2-18); err != nil {
+			if v, err := g.SetView("errmsg", 50, 5, maxX/2, maxY/2-20); err != nil {
 					if err != gocui.ErrUnknownView {
 					return err
 					}
@@ -416,6 +364,47 @@ func EditIPaddress(g *gocui.Gui, v *gocui.View) error {
 }
 
 
+func EditIPaddress2(g *gocui.Gui, v *gocui.View) error {
+	vb := v.ViewBuffer()
+	
+	trial := net.ParseIP(RemoveSpace(vb))
+	if trial.To4() == nil {
+			maxX, maxY := g.Size()
+			if v, err := g.SetView("errmsg", 50, 5, maxX/2, maxY/2-20); err != nil {
+					if err != gocui.ErrUnknownView {
+					return err
+					}
+				v.Title = "INVALID IP ADDRESS!!!!!!"
+				fmt.Fprintln(v, "Please Select Another")
+				if err := g.SetCurrentView("errmsg"); err != nil {
+				return err
+			}
+		}
+	} else {
+	
+		Write("LOCAL_END", "LOCAL_ENDPOINT", RemoveSpace(vb))
+		
+		maxX, maxY := g.Size()
+			if v, err := g.SetView("errmsg", 50, 5, maxX/2, maxY/2-20); err != nil {
+					if err != gocui.ErrUnknownView {
+					return err
+					}	
+				v.Title = "Changed IP Address"
+				fmt.Fprintln(v, vb)
+				if err := g.SetCurrentView("errmsg"); err != nil {
+				return err
+			}
+		}
+	}
+	
+	if err := g.DeleteView("input"); err != nil {
+		return err
+	}
+	return nil
+}
+
+
+
 func EditPort(g *gocui.Gui, v *gocui.View) error {
 	
 	vb := v.ViewBuffer()
@@ -436,7 +425,7 @@ func EditPort(g *gocui.Gui, v *gocui.View) error {
 	} else {
 
 		maxX, maxY := g.Size()
-			if v, err := g.SetView("errmsg", 50, 5, maxX/2, maxY/2-18); err != nil {
+			if v, err := g.SetView("errmsg", 50, 5, maxX/2, maxY/2-20); err != nil {
 					if err != gocui.ErrUnknownView {
 					return err
 					}			
@@ -463,6 +452,43 @@ func EditPort(g *gocui.Gui, v *gocui.View) error {
 	if err := g.SetCurrentView("errmsg"); err != nil {
 		return err
 	}
+	return nil
+}
+
+func EditPort2(g *gocui.Gui, v *gocui.View) error {
+	vb := v.ViewBuffer()
+	
+	if _, err := strconv.Atoi(RemoveSpace(vb)); err == nil && len(RemoveSpace(vb)) == 4 {
+			Write("LOCAL_PO", "LOCAL_PORT", RemoveSpace(vb))
+			
+			maxX, maxY := g.Size()
+			if v, err := g.SetView("errmsg", 50, 5, maxX/2, maxY/2-20); err != nil {
+					if err != gocui.ErrUnknownView {
+					return err
+					}
+				v.Title = "Changed Port Number"
+				fmt.Fprintln(v, vb)
+				if err := g.SetCurrentView("errmsg"); err != nil {
+				return err
+			}
+		}
+	} else {
+
+		maxX, maxY := g.Size()
+			if v, err := g.SetView("errmsg", 50, 5, maxX/2, maxY/2-20); err != nil {
+					if err != gocui.ErrUnknownView {
+					return err
+					}			
+				v.Title = "INVALID PORT NUMBER!!!!!"
+				fmt.Fprintln(v, "Please Select Another")
+				if err := g.SetCurrentView("errmsg"); err != nil {
+				return err
+			}
+		}
+	}
+	if err := g.DeleteView("portinput"); err != nil {
+		return err
+	}	
 	return nil
 }
 
@@ -543,7 +569,7 @@ func delBoth(g *gocui.Gui, v *gocui.View) error {
 func QuitOption(g *gocui.Gui, v *gocui.View) error {
 
 maxX, maxY := g.Size()
-	if v, err := g.SetView("close", 50, 5, maxX/2, maxY/2-18); err != nil {
+	if v, err := g.SetView("close", 50, 5, maxX/2, maxY/2-20); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
@@ -564,10 +590,10 @@ func quit(g *gocui.Gui, v *gocui.View) error {
 }
 
 func keybindings(g *gocui.Gui) error {
-	if err := g.SetKeybinding("side", gocui.KeyCtrlSpace, gocui.ModNone, nextView); err != nil {
+	if err := g.SetKeybinding("side", gocui.KeyTab, gocui.ModNone, nextView); err != nil {
 		return err
 	}
-	if err := g.SetKeybinding("file", gocui.KeyCtrlSpace, gocui.ModNone, nextView); err != nil {
+	if err := g.SetKeybinding("file", gocui.KeyTab, gocui.ModNone, nextView); err != nil {
 		return err
 	}
 	if err := g.SetKeybinding("hostinput", gocui.KeyTab, gocui.ModNone, nextView2); err != nil {
@@ -618,18 +644,6 @@ func keybindings(g *gocui.Gui) error {
 	if err := g.SetKeybinding("close", gocui.KeyEnter, gocui.ModNone, DisplayQuit); err != nil {
 		return err
 	}
-	if err := g.SetKeybinding("side", gocui.KeyCtrlP, gocui.ModNone, NewPortView); err != nil {
-		return err
-	}
-	if err := g.SetKeybinding("side", gocui.KeyCtrlI, gocui.ModNone, NewView); err != nil {
-		return err
-	}
-	if err := g.SetKeybinding("input", gocui.KeyEnter, gocui.ModNone, delEdit); err != nil {
-		return err
-	}
-	if err := g.SetKeybinding("portinput", gocui.KeyEnter, gocui.ModNone, delPort); err != nil {
-		return err
-	}
 	if err := g.SetKeybinding("errmsg", gocui.KeyEnter, gocui.ModNone, delError); err != nil {
 		return err
 	}
@@ -640,6 +654,12 @@ func keybindings(g *gocui.Gui) error {
 		return err
 	}
 	if err := g.SetKeybinding("port", gocui.KeyEnter, gocui.ModNone, EditPort); err != nil {
+		return err
+	}
+	if err := g.SetKeybinding("input", gocui.KeyEnter, gocui.ModNone, EditIPaddress2); err != nil {
+		return err
+	}		
+	if err := g.SetKeybinding("portinput", gocui.KeyEnter, gocui.ModNone, EditPort2); err != nil {
 		return err
 	}
 	return nil
@@ -683,8 +703,7 @@ func layout(g *gocui.Gui) error {
 		fmt.Fprintln(v, "______________________________")
 		fmt.Fprintln(v, "↑ ↓: Move Cursor")
 		fmt.Fprintln(v, "Enter: To Select Interface Options")
-		fmt.Fprintln(v, "CTRL+I: Edit Host IP Address")
-		fmt.Fprintln(v, "CTRL+P: Edit Host Port Number")
+		fmt.Fprintln(v, "TAB: To Switch Views")
 		fmt.Fprintln(v, "CTRL+C: Exit")
 
 		v.Wrap = true	
