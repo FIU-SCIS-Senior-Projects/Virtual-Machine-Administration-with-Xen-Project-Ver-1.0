@@ -1,0 +1,35 @@
+﻿Version 1.3.7
+-Added get host disk usage function
+
+Version 1.3.6
+-Added event notification handlers calls to most functions
+
+Version 1.3.5
+ -Added Delete virtual machine
+ -Added List VM Statistics function and VcpuStats object
+ -Added VM Process List retrieval function
+
+Version 1.3.3
+ -Added Event notification handler and notifications to certain functions
+ 
+Version 1.3.2
+ -Added remote start Agent (SendProcessListScan) to XenConnect
+
+Version 1.3.1
+ -Added Clone vm function to XenConnect
+
+Version 1.2.1
+ -Added transfer file function to XenConnect
+ -Added VirtualMachineBuilder options and attributes to create an vm from an existing disk
+
+Version 1.1.1
+ -Added VNC Port number to VM class
+ -Added Get VNC Port number function to XenConnect
+ -Added Error code static types that start from the 100 range (Ex. 101 = ERROR_NONE)
+
+Version 1.1.0
+ -Added Iso Disk retrieval functions
+ -Added Virtual Disk retrieval functions
+ -Added Create Virtual Machine function
+ -Added Force Shutdown function
+ -Added VirtualMachineBuilder class

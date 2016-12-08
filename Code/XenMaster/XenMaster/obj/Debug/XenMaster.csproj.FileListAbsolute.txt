@@ -1,0 +1,5 @@
+C:\Users\DODTech\Source\Repos\XenMaster\XenMaster\bin\Debug\XenMaster.dll
+C:\Users\DODTech\Source\Repos\XenMaster\XenMaster\bin\Debug\XenMaster.pdb
+C:\Users\DODTech\Source\Repos\XenMaster\XenMaster\obj\Debug\XenMaster.dll
+C:\Users\DODTech\Source\Repos\XenMaster\XenMaster\obj\Debug\XenMaster.pdb
+C:\Users\DODTech\Source\Repos\XenMaster\XenMaster\obj\Debug\XenMaster.csprojResolveAssemblyReference.cache

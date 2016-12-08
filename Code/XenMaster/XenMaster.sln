@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XenMaster", "XenMaster\XenMaster.csproj", "{305FA8A8-B954-405E-BEA7-F8924867B40F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test_Driver", "Test_Driver\Test_Driver.csproj", "{A43B98E7-7BF9-433E-BB94-69E0B5B4BA73}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{305FA8A8-B954-405E-BEA7-F8924867B40F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{305FA8A8-B954-405E-BEA7-F8924867B40F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{305FA8A8-B954-405E-BEA7-F8924867B40F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{305FA8A8-B954-405E-BEA7-F8924867B40F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A43B98E7-7BF9-433E-BB94-69E0B5B4BA73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A43B98E7-7BF9-433E-BB94-69E0B5B4BA73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A43B98E7-7BF9-433E-BB94-69E0B5B4BA73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A43B98E7-7BF9-433E-BB94-69E0B5B4BA73}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
